@@ -44,6 +44,25 @@ source activate pyspark
 conda install --file conda_requirements.txt
 pip install -r pip_requirements.txt
 ```
+Alternatively
+```bash
+python3.7 -m venv pyspark
+source pyspark/bin/activate
+pip install --upgrade pip
+pip install --upgrade setuptools
+pip install -r tests/pip_requirements.txt
+python -m pytest tests/
+```
+
+There are a few issues with python3.7 and collections.abc/imp packages. The warnings can be ignored or the following can be done:
+1. pyspark/lib/python3.7/site-packages/pyspark/resultiterable.py 
+	line 19 -> import collections.abc
+	line 23 -> collections.abc.Iterable
+2. pyspark/lib/python3.7/site-packages/pyspark/cloudpickle.py
+	line 47 import importlib
+3. pyspark/lib/python3.7/site-packages/py4j/java_collections.py
+	line 13 -> from collections.abc import
+
 Please note that we did not add on purpose PySpark pip package, since this will not be a requirement in your production Spark Cluster environment.
 However, in `tests/pip_requirements.txt` you can find the required PySpark packge to install locally in case you have not manually configured PySpark (old school style).
 
