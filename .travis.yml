@@ -1,6 +1,19 @@
 language: python
+sudo: false
 python:
   - "3.7"
+jdk: openjdk8
+before_install:
+  - sudo mkdir -p /opt
+  - sudo wget -O /opt/spark.tgz https://www-eu.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+  - sudo tar xzf /opt/spark.tgz -C /opt/
+  - sudo rm /opt/spark.tgz
+  - export SPARK_HOME=/opt/spark-2.4.4-bin-hadoop2.7
+  - export PATH=$PATH:/opt/spark-2.4.4-bin-hadoop2.7/bin
+  - java -version
+  - sudo apt install openjdk-8-jdk
+  - sudo update-alternatives --config java
+  - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 install:
   - pip install -r tests/pip_requirements.txt
   - pip install coverage
