@@ -109,6 +109,7 @@ ENV/
 
 .pytest_cache
 
+pyspark
 
 config_*.txt
 
