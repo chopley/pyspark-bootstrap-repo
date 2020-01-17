@@ -3,6 +3,7 @@ from pyspark.sql import DataFrame, Row, SparkSession
 from pyspark.sql.functions import col
 
 from src.job import amount_spent_udf
+from src.relecart import get_data_from_parquets, get_table_from_parquet
 
 
 def test_amount_spent_udf(spark_session: SparkSession) -> None:
@@ -17,3 +18,7 @@ def test_amount_spent_udf(spark_session: SparkSession) -> None:
                                       'product_name', 'quantity']
 
     assert result.collect()[0].amount_spent == 2.00
+    
+def test_get_data_from_parquets(spark_session: SparkSession) -> None:
+    result = get_data_from_parquets(spark_session)
+    assert result == 6319
